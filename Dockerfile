@@ -1,15 +1,11 @@
 # TensorFlow & scikit-learn with Python3.6
 FROM python:3.6
-LABEL maintainer “Shiho ASA<asashiho@mail.asa.yokohama>”
-
+LABEL maintainer “Junichi Yoshise <junichi.yoshise@hpe.com>”
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     libblas-dev \
 	liblapack-dev\
     libatlas-base-dev \
-    mecab \
-    mecab-naist-jdic \
-    libmecab-dev \
 	gfortran \
     libav-tools \
     python3-setuptools
@@ -35,7 +31,6 @@ RUN pip --no-cache-dir install \
         pandas \
         plotly \
         sympy \
-        mecab-python3 \
         librosa \
         Pillow \
         h5py \
@@ -45,7 +40,7 @@ RUN pip --no-cache-dir install \
 
 # Set up Jupyter Notebook config
 ENV CONFIG /root/.jupyter/jupyter_notebook_config.py
-ENV CONFIG_IPYTHON /root/.ipython/profile_default/ipython_config.py 
+ENV CONFIG_IPYTHON /root/.ipython/profile_default/ipython_config.py
 
 RUN jupyter notebook --generate-config --allow-root && \
     ipython profile create
@@ -53,15 +48,15 @@ RUN jupyter notebook --generate-config --allow-root && \
 RUN echo "c.NotebookApp.ip = '*'" >>${CONFIG} && \
     echo "c.NotebookApp.open_browser = False" >>${CONFIG} && \
     echo "c.NotebookApp.iopub_data_rate_limit=10000000000" >>${CONFIG} && \
-    echo "c.MultiKernelManager.default_kernel_name = 'python3'" >>${CONFIG} 
+    echo "c.MultiKernelManager.default_kernel_name = 'python3'" >>${CONFIG}
 
-RUN echo "c.InteractiveShellApp.exec_lines = ['%matplotlib inline']" >>${CONFIG_IPYTHON} 
+RUN echo "c.InteractiveShellApp.exec_lines = ['%matplotlib inline']" >>${CONFIG_IPYTHON}
 
 # Copy sample notebooks.
 COPY notebooks /notebooks
 
 # port
-EXPOSE 8888 6006 
+EXPOSE 8888 6006
 
 VOLUME /notebooks
 
