@@ -1,6 +1,6 @@
 {
   "id": "ml-demo/jupyter",
-  "cpus": 4,
+  "cpus": 2,
   "mem": 256,
   "instances": 1,
   "container": {
