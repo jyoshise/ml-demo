@@ -1,0 +1,29 @@
+{
+  "id": "ml-demo/jupyter",
+  "cpus": 4,
+  "mem": 256,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "gitlab.app.dcosdemo.local:50000/demouser/ml-demo:latest",
+      "portMappings": [
+      	{
+        	"containerPort": 8888,
+        	"protocol": "tcp",
+        	"name": "http"
+      	}
+      ],
+	    "network": "BRIDGE"
+	  }
+	},
+  "labels": {
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "ml-demo",
+		"HAPROXY_GROUP": "external",
+		"HAPROXY_0_VHOST": "ml-demo.app.dcosdemo.local"
+  },
+  "uris": [
+    "file:///etc/docker.tar.gz"
+  ]
+}
